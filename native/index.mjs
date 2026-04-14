@@ -1,5 +1,10 @@
-const { existsSync } = require("fs");
-const { join } = require("path");
+import { existsSync } from "fs";
+import { dirname, join } from "path";
+import { createRequire } from "module";
+import { fileURLToPath } from "url";
+
+const require = createRequire(import.meta.url);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const { platform, arch } = process;
 
@@ -62,4 +67,5 @@ if (!nativeBinding) {
   throw new Error(`Failed to load dc-native binding`);
 }
 
-module.exports = nativeBinding;
+export const { passwords } = nativeBinding;
+export default nativeBinding;
